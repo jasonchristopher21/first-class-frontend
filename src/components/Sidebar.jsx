@@ -1,6 +1,5 @@
 import React from 'react'
-import { HiOutlineMenuAlt2, HiOutlineHome } from 'react-icons/hi'
-import { CiShoppingCart, CiDeliveryTruck } from 'react-icons/ci'
+import { icon_cart, icon_home, icon_menubar, icon_order } from '../assets'
 
 export const Sidebar = () => {
   return (
@@ -8,7 +7,7 @@ export const Sidebar = () => {
         <ul>
             <li>
                 <button>
-                    <HiOutlineMenuAlt2 />
+                    <img src={icon_menubar} />
                 </button>
             </li>
         </ul>
@@ -16,7 +15,7 @@ export const Sidebar = () => {
         <ul>
             <li>
                 <button>
-                    <HiOutlineHome/>
+                    <img src={icon_home} />
                 </button>
             </li>
         </ul>
@@ -24,7 +23,7 @@ export const Sidebar = () => {
         <ul>
             <li>
                 <button>
-                    <CiShoppingCart />
+                    <img src={icon_cart} />
                 </button>
             </li>
         </ul>
@@ -32,7 +31,7 @@ export const Sidebar = () => {
         <ul>
             <li>
                 <button>
-                    <CiDeliveryTruck />
+                    <img src={icon_order} />
                 </button>
             </li>
         </ul>
