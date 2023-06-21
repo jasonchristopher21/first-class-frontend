@@ -15,7 +15,7 @@ export default {
         black: "#1F201E"
       },
       fontFamily: {
-
+        montserrat: ["Montserrat", "sans-serif"]
       }
     },
     screens: {
