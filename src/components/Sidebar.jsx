@@ -41,8 +41,8 @@ export const Sidebar = () => {
   };
 
   return (
-    <nav>
-      <div className="rounded-full bg-white p-4">
+    <nav className="fixed bottom-50 right-5 z-50 rounded-full bg-white p-2">
+      <div>
         <div className="nav-content" onClick={toggleNavBar}>
           <img src={icon_menubar} />
         </div>
