@@ -1,15 +1,23 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
+import Cart from "./pages/Cart.jsx";
+import "./index.css";
 
-import { store } from "./redux/store.js"
-import { Provider } from "react-redux"
+import { store } from "./redux/store.js";
+import { Provider } from "react-redux";
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>,
-)
+    <BrowserRouter>
+      <Provider store={store}>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="cart" element={<Cart />} />
+        </Routes>
+      </Provider>
+    </BrowserRouter>
+  </React.StrictMode>
+);
