@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import Cart from "./pages/Cart.jsx";
+import Status from "./pages/Status.jsx";
 import "./index.css";
 
 import { store } from "./redux/store.js";
@@ -16,6 +17,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="cart" element={<Cart />} />
+          <Route path="status/:id" element={<Status />} />
         </Routes>
       </Provider>
     </BrowserRouter>
