@@ -3,6 +3,9 @@ import styles from "../style";
 import dummy_food_img from "../assets/dummy_food_img.png";
 import cart_black from "../assets/cart-black.svg";
 
+import { useSelector, useDispatch } from 'react-redux'
+import { addToCart } from "../redux/features/cart/cartSlice"
+
 const Cart = () => {
   const [seat, setSeat] = useState("21F");
 
@@ -10,20 +13,29 @@ const Cart = () => {
   const [tax, setTax] = useState("0.00");
   const [total, setTotal] = useState("21.90");
 
-  const orders = [
-    {
-      image: dummy_food_img,
-      name: "Signature Laksa",
-      price: "8.50",
-      qty: 1,
-    },
-    {
-      image: dummy_food_img,
-      name: "Nasi Lemak",
-      price: "8.50",
-      qty: 1,
-    },
-  ];
+  const orders = useSelector(state => state.cart)
+
+  const dummy = 
+  {
+    image: dummy_food_img,
+    name: "Signature Liksi",
+    price: "8.50",
+    qty: 1,
+  }
+  // const orders = [
+  //   {
+  //     image: dummy_food_img,
+  //     name: "Signature Laksa",
+  //     price: "8.50",
+  //     qty: 1,
+  //   },
+  //   {
+  //     image: dummy_food_img,
+  //     name: "Nasi Lemak",
+  //     price: "8.50",
+  //     qty: 1,
+  //   },
+  // ];
 
   const addOns = [
     {
@@ -52,6 +64,8 @@ const Cart = () => {
       price: "8.50",
     },
   ];
+
+  const dispatch = useDispatch();
 
   return (
     <div className="bg-light-grey">
@@ -83,8 +97,8 @@ const Cart = () => {
         <div className="mt-7">
           <span className={`${styles.heading3} text-black`}>Orders</span>
           <div className="order-cards flex flex-col gap-0.5 px-5 py-2 mt-4 bg-white w-full text-black rounded-2xl divide-y divide-[#00000020]">
-            {orders.map((order) => (
-              <OrderCard order={order} />
+            {orders.map((order, idx) => (
+              <OrderCard order={order} key={idx} />
             ))}
           </div>
         </div>
@@ -96,16 +110,16 @@ const Cart = () => {
               Grab them while they're available!
             </span>
           </div>
-          <div class="flex gap-2 overflow-x-scroll mt-4 -mx-10">
-            <div class="ml-8"></div>
-            {addOns.map((item) => (
-              <AddOnCard item={item} />
+          <div className="flex gap-2 overflow-x-scroll mt-4 -mx-10">
+            <div className="ml-8"></div>
+            {addOns.map((item, idx) => (
+              <AddOnCard item={item} key={idx} />
             ))}
           </div>
         </div>
 
         <div>
-          <button className="flex gap-3 py-2 px-8 bg-yellow mt-8 text-black rounded-full drop-shadow-[0px_4px_4px_rgba(0,0,0,0.05)]">
+          <button className="flex gap-3 py-2 px-8 bg-yellow mt-8 text-black rounded-full drop-shadow-[0px_4px_4px_rgba(0,0,0,0.05)]" onClick={() => dispatch(addToCart(dummy))}>
             <img src={cart_black} className="-ml-1 my-auto" />
             <span className={`${styles.heading5} my-auto`}>Checkout</span>
           </button>
@@ -135,7 +149,7 @@ const AddOnCard = (props) => {
   const item = props.item;
   return (
     <div className="flex flex-col gap-2 bg-white px-4 pt-4 pb-2 rounded-lg">
-      <img src={item.image} class="my-auto" />
+      <img src={item.image} className="my-auto" />
       <div className="flex flex-row justify-between gap-4 text-black">
         <span className={`${styles.heading5} my-auto`}>{item.name}</span>
         <span className={`${styles.paragraph8} my-auto`}>${item.price}</span>
