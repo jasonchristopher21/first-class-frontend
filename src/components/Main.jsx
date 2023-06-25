@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../style";
 import { flight_path, big_deal } from "../assets";
 import dummy_food_img from "../assets/dummy_food_img.png";
+import { selectCurrentUser } from "../redux/features/auth/authSlice";
+import { useSelector } from "react-redux";
 
 export const Main = () => {
   const [flightNumber, setFlightNumber] = useState("TR252");
@@ -14,6 +16,8 @@ export const Main = () => {
   const [toCity, setToCity] = useState("Pekanbaru");
   const [toCityCode, setToCityCode] = useState("PKU");
   const [toTime, setToTime] = useState("11.00");
+  
+  const user = useSelector(selectCurrentUser);
 
   const deals = [
     {
@@ -55,6 +59,10 @@ export const Main = () => {
       price: "8.50",
     },
   ];
+
+  useEffect(() => {
+    console.log(user);
+  }, [])
 
   return (
     <div className="bg-light-grey">
