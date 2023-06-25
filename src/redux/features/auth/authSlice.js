@@ -4,7 +4,7 @@ import axios from "axios";
 
 const initialState = {
   loading: false,
-  user: {},
+  user: null,
   token: null,
   error: null,
   success: false,
@@ -23,7 +23,7 @@ export const getUser = createAsyncThunk("auth/getUser",
                     "Content-Type": "application/json",
                 }
             }
-            const response = await axios.post(`${API_URL}/auth/user`, payload, defaultHeaders);
+            const response = await axios.post(`${API_URL}/auth/user/login`, payload, defaultHeaders);
             return response.data;
         } catch (error) {
             console.log(error);
@@ -51,8 +51,12 @@ const authSlice = createSlice({
         });
         builder.addCase(getUser.fulfilled, (state, action) => {
             state.loading = false;
-            state.user = action.payload.user;
-            state.token = action.payload.accessToken;
+            state.user = {
+                "id": action.payload._id,
+                "surname": action.payload.surname,
+                "flightNumber": action.payload.flightNumber,
+            }
+            state.token = action.payload.token;
             state.success = true;
         });
         builder.addCase(getUser.rejected, (state, action) => {
