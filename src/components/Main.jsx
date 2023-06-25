@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import styles from "../style";
 import { flight_path, big_deal } from "../assets";
-// import dummy_food_img from "../assets/dummy_food_img.png";
-// import cart_black from "../assets/cart-black.svg";
-
-// import { useSelector, useDispatch } from "react-redux";
-// import { addToCart } from "../redux/features/cart/cartSlice";
+import dummy_food_img from "../assets/dummy_food_img.png";
 
 export const Main = () => {
   const [flightNumber, setFlightNumber] = useState("TR252");
@@ -19,18 +15,6 @@ export const Main = () => {
   const [toCityCode, setToCityCode] = useState("PKU");
   const [toTime, setToTime] = useState("11.00");
 
-  // const [subtotal, setSubtotal] = useState("21.90");
-  // const [tax, setTax] = useState("0.00");
-  // const [total, setTotal] = useState("21.90");
-
-  // const orders = useSelector(state => state.cart)
-
-  // const dummy = {
-  //   image: dummy_food_img,
-  //   name: "Signature Liksi",
-  //   price: "8.50",
-  //   qty: 1,
-  // };
   const deals = [
     {
       image: big_deal,
@@ -49,35 +33,28 @@ export const Main = () => {
     },
   ];
 
-  // const addOns = [
-  //   {
-  //     image: dummy_food_img,
-  //     name: "Sprite",
-  //     price: "8.50",
-  //   },
-  //   {
-  //     image: dummy_food_img,
-  //     name: "Sprite",
-  //     price: "8.50",
-  //   },
-  //   {
-  //     image: dummy_food_img,
-  //     name: "Sprite",
-  //     price: "8.50",
-  //   },
-  //   {
-  //     image: dummy_food_img,
-  //     name: "Sprite",
-  //     price: "8.50",
-  //   },
-  //   {
-  //     image: dummy_food_img,
-  //     name: "Sprite",
-  //     price: "8.50",
-  //   },
-  // ];
-
-  // const dispatch = useDispatch();
+  const items = [
+    {
+      image: dummy_food_img,
+      name: "Signature Laksa",
+      price: "8.50",
+    },
+    {
+      image: dummy_food_img,
+      name: "Nasi Lemak",
+      price: "8.50",
+    },
+    {
+      image: dummy_food_img,
+      name: "Nasi Padang",
+      price: "8.50",
+    },
+    {
+      image: dummy_food_img,
+      name: "Lontong Sayur",
+      price: "8.50",
+    },
+  ];
 
   return (
     <div className="bg-light-grey">
@@ -131,24 +108,13 @@ export const Main = () => {
         </div>
 
         <div className="mt-7">
-            <span className={`${styles.heading3} text-black`}>Categories</span>
-          <div className="flex gap-2 overflow-x-scroll no-scrollbar mt-4 -mx-10">
-            <div className="ml-8"></div>
-            {deals.map((deal, idx) => (
-              <DealCard deal={deal} key={idx} />
+          <span className={`${styles.heading3} text-black`}>Categories</span>
+          <div className="grid grid-cols-2 gap-4 overflow-y-scroll no-scrollbar mt-4">
+            {items.map((item, idx) => (
+              <ItemCard item={item} key={idx} />
             ))}
           </div>
         </div>
-
-        {/* <div>
-          <button
-            className="flex gap-3 py-2 px-8 bg-yellow mt-8 text-black rounded-full drop-shadow-[0px_4px_4px_rgba(0,0,0,0.05)]"
-            onClick={() => dispatch(addToCart(dummy))}
-          >
-            <img src={cart_black} className="-ml-1 my-auto" />
-            <span className={`${styles.heading5} my-auto`}>Checkout</span>
-          </button>
-        </div> */}
       </div>
     </div>
   );
@@ -169,12 +135,12 @@ const DealCard = (props) => {
   );
 };
 
-const AddOnCard = (props) => {
+const ItemCard = (props) => {
   const item = props.item;
   return (
-    <div className="flex flex-col gap-2 bg-white px-4 pt-4 pb-2 rounded-lg">
+    <div className="flex flex-col gap-2 bg-white px-3 py-3 rounded-lg">
       <img src={item.image} className="my-auto" />
-      <div className="flex flex-row justify-between gap-4 text-black">
+      <div className="flex flex-col justify-between text-black">
         <span className={`${styles.heading5} my-auto`}>{item.name}</span>
         <span className={`${styles.paragraph8} my-auto`}>${item.price}</span>
       </div>
