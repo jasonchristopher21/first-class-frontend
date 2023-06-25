@@ -13,6 +13,7 @@ export default {
       "orange": "#FFAE00",
       "yellow": "#FFE900",
       "yellow-accent": "#FFFBCC",
+      "red": "#F36464",
     },
     fontFamily: {
       'sans': ['Montserrat', 'sans-serif']

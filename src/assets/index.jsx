@@ -4,6 +4,9 @@ import icon_menubar from "./icon_menubar.png";
 import icon_order from "./icon_order.png";
 import flight_path from "./flight_path.png";
 import big_deal from "./big_deal.png";
+import spicy from "./spicy.png";
+import vegetarian from "./vegetarian.png";
+
 export {
   big_deal,
   icon_cart,
@@ -11,4 +14,6 @@ export {
   icon_menubar,
   icon_order,
   flight_path,
+  spicy,
+  vegetarian
 };
