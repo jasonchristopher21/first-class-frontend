@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import styles from "../style";
 import { flight_path, big_deal } from "../assets";
+import { useSelector, useDispatch } from 'react-redux'
 import dummy_food_img from "../assets/dummy_food_img.png";
+import { selectCurrentUser } from "../redux/features/auth/authSlice";
 
 export const Main = () => {
+
+  const surname = useSelector(selectCurrentUser).surname  
+
   const [flightNumber, setFlightNumber] = useState("TR252");
   const [passengerName, setPassengerName] = useState("Florentiana Yuwono");
   const [seat, setSeat] = useState("21F");
@@ -64,7 +69,7 @@ export const Main = () => {
           <span className={styles.paragraph6}>
             Welcome onboard {flightNumber},
           </span>
-          <span className={styles.heading3}>{passengerName}</span>
+          <span className={styles.heading3}>{surname}</span>
         </div>
 
         <div className="order-card flex flex-col gap-0.5 p-5 mt-5 bg-white w-full text-black rounded-2xl">

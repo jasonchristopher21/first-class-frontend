@@ -3,6 +3,7 @@ import styles from '../style';
 
 import { store } from '../redux/store';
 import { getUser } from '../redux/features/auth/authSlice';
+import { useNavigate } from "react-router-dom"
 
 export const LoginBanner = () => {
   const [passengerMode, setPassengerMode] = useState(true);
@@ -20,8 +21,15 @@ export const LoginBanner = () => {
   const passengerFieldNames = ['Surname', 'Flight Number', 'Seat Number'];
   const attendantFieldNames = ['Staff ID', 'Flight Number'];
 
+  const navigate = useNavigate();
+
   const toggleModes = () => {
     return passengerMode ? setPassengerMode(false) : setPassengerMode(true);
+  };
+
+  const handlePassengerLogin = () => {
+    store.dispatch(getUser({ surname: "Yuwono", flightNumber: 'TR2542', seatNumber: '16K' }));
+    navigate("/home")
   };
 
   const TextField = ({ fieldName }) => {
@@ -68,10 +76,6 @@ export const LoginBanner = () => {
       </div>
     );
   };
-
-  const handlePassengerLogin = () => {
-    store.dispatch(getUser({ surname: "Yuwono", flightNumber: 'TR2542', seatNumber: '16K' }));
-  }
 
   return (
     <div className="h-[75%] bg-white rounded-t-3xl shadow-[0px 0px 20px 0px rgba(0, 0, 0, 0.25)] flex content-center items-center flex-col">
