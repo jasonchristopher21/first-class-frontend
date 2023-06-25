@@ -3,6 +3,10 @@ import styles from '../style';
 
 export const LoginBanner = () => {
   const [passengerMode, setPassengerMode] = useState(true);
+  const [surname, setSurname] = useState('');
+  const [flightNumber, setFlightNumber] = useState('');
+  const [seatNumber, setSeatNumber] = useState('');
+  const [staffId, setStaffId] = useState('');
 
   const arrow = <span>&#x1F806;</span>;
 
@@ -14,28 +18,47 @@ export const LoginBanner = () => {
     'Enter your Staff ID and flight',
     'number to proceed.',
   ];
-  const passengerFieldNames = ['Surname', 'Flight Number', 'Seat Number'];
-  const attendantFieldNames = ['Staff ID', 'Flight Number'];
 
   const toggleModes = () => {
-    return passengerMode ? setPassengerMode(false) : setPassengerMode(true);
+    if (passengerMode) {
+      setPassengerMode(false);
+      setSurname('');
+      setFlightNumber('');
+      setSeatNumber('');
+    } else {
+      setPassengerMode(true);
+      setStaffId('');
+      ('');
+      setFlightNumber('');
+    }
   };
 
-  const TextField = ({ fieldName }) => {
-    return (
-      <div className="w-[100%] text-left pb-4">
-        <p className={`${styles.paragraph6} text-black pb-1`}>{fieldName}</p>
-        <input
-          className={` ${styles.paragraph6} w-[100%] bg-[#00000010] rounded-xl text-black focus:outline-0 p-3`}></input>
-      </div>
-    );
+  const handlePassengerButtonClick = () => {
+    console.log(surname);
+    console.log(flightNumber);
+    console.log(seatNumber);
+    // fetch('/auth/user/login', {
+    //   method: 'POST',
+    //   headers: JSON.stringify({
+    //     Accept: 'application.json',
+    //     'Content-Type': 'application/json',
+    //   }),
+    //   body: {
+    //     surname: surname,
+    //     flightNumber: flightNumber,
+    //     seatNumber: seatNumber,
+    //   },
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => console.log(data));
   };
-
-  const LoginButton = () => {
+  
+  const LoginButton = ({ onClick }) => {
     return (
       <div className="w-[100%] text-center pb-4 pt-4">
         <button
-          className={`${styles.heading4} rounded-full bg-yellow w-[100%] focus:outline-0 focus:bg-yellow-accent text-black`}>
+          className={`${styles.heading4} rounded-full bg-yellow w-[100%] focus:outline-0 focus:bg-yellow-accent text-black`}
+          onClick={onClick}>
           Log in
         </button>
       </div>
@@ -45,11 +68,11 @@ export const LoginBanner = () => {
   const Instructions = ({ instructionsArray }) => {
     return (
       <div className="w-[100%] text-center pb-8">
-        <p className={`${styles.paragraph6} text-black`}>
-          {instructionsArray.map((instruction, index) => (
-            <p key={index}>{instruction}</p>
-          ))}
-        </p>
+        {instructionsArray.map((instruction, index) => (
+          <p key={index} className={`${styles.paragraph6} text-black`}>
+            {instruction}
+          </p>
+        ))}
       </div>
     );
   };
@@ -76,19 +99,56 @@ export const LoginBanner = () => {
         {passengerMode ? (
           <>
             <Instructions instructionsArray={passengerModeInputInstructions} />
-            {passengerFieldNames.map((fieldName) => {
-              return <TextField fieldName={fieldName} key={fieldName} />;
-            })}
-            <LoginButton />
+            <div className="w-[100%] text-left pb-4">
+              <p className={`${styles.paragraph6} text-black pb-1`}>Surname</p>
+              <input
+                className={` ${styles.paragraph6} w-[100%] bg-[#00000010] rounded-xl text-black focus:outline-0 p-3`}
+                onChange={(e) => setSurname(e.currentTarget.value)}
+                value={surname}></input>
+            </div>
+            <div className="w-[100%] text-left pb-4">
+              <p className={`${styles.paragraph6} text-black pb-1`}>
+                Flight Number
+              </p>
+              <input
+                className={` ${styles.paragraph6} w-[100%] bg-[#00000010] rounded-xl text-black focus:outline-0 p-3`}
+                onChange={(e) => setFlightNumber(e.currentTarget.value)}
+                value={flightNumber}></input>
+            </div>
+            <div className="w-[100%] text-left pb-4">
+              <p className={`${styles.paragraph6} text-black pb-1`}>
+                Seat Number
+              </p>
+              <input
+                className={` ${styles.paragraph6} w-[100%] bg-[#00000010] rounded-xl text-black focus:outline-0 p-3`}
+                onChange={(e) => setSeatNumber(e.currentTarget.value)}
+                value={seatNumber}></input>
+            </div>
+            <LoginButton onClick={handlePassengerButtonClick} />
             <LoginAsText role="STAFF MEMBER" />
           </>
         ) : (
           <>
             <Instructions instructionsArray={attendantModeInputInstructions} />
-            {attendantFieldNames.map((fieldName) => {
-              return <TextField fieldName={fieldName} key={fieldName} />;
-            })}
-            <LoginButton />
+            <div className="w-[100%] text-left pb-4">
+              <p className={`${styles.paragraph6} text-black pb-1`}>Staff ID</p>
+              <input
+                className={` ${styles.paragraph6} w-[100%] bg-[#00000010] rounded-xl text-black focus:outline-0 p-3`}
+                onChange={(e) => setStaffId(e.currentTarget.value)}
+                value={staffId}></input>
+            </div>
+            <div className="w-[100%] text-left pb-4">
+              <p className={`${styles.paragraph6} text-black pb-1`}>
+                Flight Number
+              </p>
+              <input
+                className={` ${styles.paragraph6} w-[100%] bg-[#00000010] rounded-xl text-black focus:outline-0 p-3`}
+                onChange={(e) => setFlightNumber(e.currentTarget.value)}
+                value={seatNumber}></input>
+            </div>
+            <LoginButton
+              onClick={passengerMode ? handlePassengerButtonClick : null}
+            />
             <LoginAsText role="PASSENGER" />
           </>
         )}
