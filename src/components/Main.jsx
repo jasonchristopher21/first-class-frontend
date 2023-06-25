@@ -112,7 +112,7 @@ export const Main = () => {
           <span className={`${styles.heading3} text-black`}>Categories</span>
           <div className="grid grid-cols-2 gap-4 overflow-y-scroll no-scrollbar mt-4">
             {items.map((item, idx) => (
-              <Link to="/product/" key={idx}>
+              <Link to={`/product/${idx + 1}`} key={idx}>
               <ItemCard item={item} key={idx} />
               </Link>
             ))}
