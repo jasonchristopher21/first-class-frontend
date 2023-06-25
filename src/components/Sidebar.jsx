@@ -3,9 +3,11 @@ import Draggable from "react-draggable";
 import { icon_cart, icon_home, icon_menubar, icon_order } from "../assets";
 import "../index.css";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const auth = useSelector((state) => state.auth)
 
   const toggleNavBar = () => {
     setIsOpen(!isOpen);
@@ -37,7 +39,7 @@ export const Sidebar = () => {
         <ul>
           <li>
             <div className="nav-content">
-              <Link to="/status/:id">
+              <Link to={`/status/${auth.orderId}`}>
                 <img src={icon_order} />
               </Link>
             </div>

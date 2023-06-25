@@ -2,14 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import dummy_food_img from "../../../assets/dummy_food_img.png";
 
 // TODO: Change initial state to empty array
-const initialState = [
-  {
-    image: dummy_food_img,
-    name: "Signature Laksa",
-    price: "8.50",
-    qty: 1,
-  },
-];
+const initialState = [];
 
 const cartSlice = createSlice({
   name: "cart",
@@ -29,25 +22,28 @@ const cartSlice = createSlice({
       const existingItem = state.find(
         (item) => item.name === action.payload.name
       );
-      existingItem.quantity++;
+      existingItem.qty++;
     },
     decrementQuantity: (state, action) => {
       const existingItem = state.find(
         (item) => item.name === action.payload.name
       );
-      if (existingItem.quantity === 1) {
+      if (existingItem.qty === 1) {
         return state.filter((item) => item.name !== action.payload.name);
       } else {
-        existingItem.quantity--;
+        existingItem.qty--;
       }
     },
     removeItem: (state, action) => {
       return state.filter((item) => item.name !== action.payload.name);
+    },
+    clearCart: (state, action) => {
+      return [];
     },
   },
 });
 
 export default cartSlice.reducer;
 
-export const { addToCart, incrementQuantity, decrementQuantity, removeItem } =
+export const { addToCart, incrementQuantity, decrementQuantity, removeItem, clearCart } =
   cartSlice.actions;

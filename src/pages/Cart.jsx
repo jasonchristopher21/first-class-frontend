@@ -1,71 +1,88 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../style";
 import dummy_food_img from "../assets/dummy_food_img.png";
 import cart_black from "../assets/cart-black.svg";
+import add from "../assets/add.svg";
+import subtract from "../assets/subtract.svg";
+
 import { Sidebar } from "../components/Sidebar";
 
 import { useSelector, useDispatch } from "react-redux";
-import { addToCart } from "../redux/features/cart/cartSlice";
+import { useNavigate } from "react-router-dom";
+
+import axios from "axios";
+import { API_URL } from "../constants";
+
+import {
+  addToCart,
+  incrementQuantity,
+  decrementQuantity,
+  clearCart,
+} from "../redux/features/cart/cartSlice";
+
+import {
+  addOrderId,
+} from "../redux/features/auth/authSlice";
+
+import { selectToken } from "../redux/features/auth/authSlice";
 
 const Cart = () => {
   const [seat, setSeat] = useState("21F");
 
-  const [subtotal, setSubtotal] = useState("21.90");
-  const [tax, setTax] = useState("0.00");
-  const [total, setTotal] = useState("21.90");
+  const [subtotal, setSubtotal] = useState(21.9);
+  const [tax, setTax] = useState(0);
+  const [total, setTotal] = useState(21.9);
 
   const orders = useSelector((state) => state.cart);
 
-  const dummy = {
-    image: dummy_food_img,
-    name: "Signature Liksi",
-    price: "8.50",
-    qty: 1,
-  };
-  // const orders = [
-  //   {
-  //     image: dummy_food_img,
-  //     name: "Signature Laksa",
-  //     price: "8.50",
-  //     qty: 1,
-  //   },
-  //   {
-  //     image: dummy_food_img,
-  //     name: "Nasi Lemak",
-  //     price: "8.50",
-  //     qty: 1,
-  //   },
-  // ];
+  const addOns = [];
 
-  const addOns = [
-    {
-      image: dummy_food_img,
-      name: "Sprite",
-      price: "8.50",
-    },
-    {
-      image: dummy_food_img,
-      name: "Sprite",
-      price: "8.50",
-    },
-    {
-      image: dummy_food_img,
-      name: "Sprite",
-      price: "8.50",
-    },
-    {
-      image: dummy_food_img,
-      name: "Sprite",
-      price: "8.50",
-    },
-    {
-      image: dummy_food_img,
-      name: "Sprite",
-      price: "8.50",
-    },
-  ];
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [changed, setChanged] = useState(false);
+  const token = useSelector((state) => state.auth.token)
+
+  console.log(orders)
+
+  const postOrder = () => {
+    axios
+      .post(
+        `${API_URL}/order`,
+        {
+          products: orders.map((order) => {
+            console.log(order)
+            return {
+              productId: order._id,
+              quantity: order.qty,
+            };
+          }),
+          orderDateTime: new Date(),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        dispatch(addOrderId(res.data._id));
+        navigate("/status/" + res.data._id)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    let subtotal = 0;
+    orders.map((order) => {
+      subtotal += order.price * order.qty;
+    });
+    setSubtotal(subtotal);
+    setTotal(subtotal + tax);
+    setChanged(false);
+  }, [changed]);
 
   return (
     <div className="bg-light-grey">
@@ -84,24 +101,34 @@ const Cart = () => {
         <div className="order-card flex flex-col gap-0.5 p-5 mt-5 bg-white w-full text-black rounded-2xl">
           <div className="flex flex-row justify-between">
             <span className={styles.paragraph7}>Subtotal</span>
-            <span className={styles.paragraph8}>${subtotal}</span>
+            <span className={styles.paragraph8}>${subtotal.toFixed(2)}</span>
           </div>
           <div className="flex flex-row justify-between">
             <span className={styles.paragraph7}>Tax & Fees</span>
-            <span className={styles.paragraph8}>${tax}</span>
+            <span className={styles.paragraph8}>${tax.toFixed(2)}</span>
           </div>
           <div className="pt-1.5 mb-1.5 border-b border-b-black opacity-20"></div>
           <div className={`${styles.heading4} flex flex-row justify-between`}>
             <span>Total</span>
-            <span>${total}</span>
+            <span>${total.toFixed(2)}</span>
           </div>
         </div>
 
         <div className="mt-7">
           <span className={`${styles.heading3} text-black`}>Orders</span>
           <div className="order-cards flex flex-col gap-0.5 px-5 py-2 mt-4 bg-white w-full text-black rounded-2xl divide-y divide-[#00000020]">
+            {orders.length ? null : (
+              <span className={styles.paragraph8}>
+                You have no items in your cart.
+              </span>
+            )}
             {orders.map((order, idx) => (
-              <OrderCard order={order} key={idx} />
+              <OrderCard
+                order={order}
+                key={idx}
+                dispatch={dispatch}
+                setChanged={setChanged}
+              />
             ))}
           </div>
         </div>
@@ -124,7 +151,7 @@ const Cart = () => {
         <div>
           <button
             className="flex gap-3 py-2 px-8 bg-yellow mt-8 text-black rounded-full drop-shadow-[0px_4px_4px_rgba(0,0,0,0.05)]"
-            onClick={() => dispatch(addToCart(dummy))}
+            onClick={postOrder}
           >
             <img src={cart_black} className="-ml-1 my-auto" />
             <span className={`${styles.heading5} my-auto`}>Checkout</span>
@@ -139,12 +166,30 @@ const OrderCard = (props) => {
   const order = props.order;
   return (
     <div className="flex gap-5 py-4">
-      <img src={order.image} />
+      <img src={order.image} className="w-16 h-16 my-auto" />
       <div className="flex flex-col gap-1.5 w-full my-auto">
         <span className={styles.heading5}>{order.name}</span>
         <div className="flex flex-row justify-between">
           <span className={styles.paragraph2}>${order.price}</span>
-          <span>{order.qty}</span>
+          <div className="order-button flex">
+            <img
+              src={subtract}
+              className="hover:cursor-pointer"
+              onClick={() => {
+                props.dispatch(decrementQuantity(order));
+                props.setChanged(true);
+              }}
+            />
+            <span className="px-2">{order.qty}</span>
+            <img
+              src={add}
+              className="hover:cursor-pointer"
+              onClick={() => {
+                props.dispatch(incrementQuantity(order));
+                props.setChanged(true);
+              }}
+            />
+          </div>
         </div>
       </div>
     </div>

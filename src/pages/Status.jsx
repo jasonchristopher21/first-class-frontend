@@ -1,63 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../style";
-import dummy_food_img from "../assets/dummy_food_img.png";
-import cart_black from "../assets/cart-black.svg";
+import barcode from "../assets/barcode.png";
+
 import { useParams } from "react-router-dom";
 import { Sidebar } from "../components/Sidebar";
+
+import preparing from "../assets/status/preparing.png";
+import serving from "../assets/status/serving.png";
+import completed from "../assets/status/completed.png";
+
+import { useSelector, useDispatch } from "react-redux";
 
 const Status = () => {
   const [seat, setSeat] = useState("21F");
 
   const [status, setStatus] = useState("received");
-
-  const [subtotal, setSubtotal] = useState("21.90");
-  const [tax, setTax] = useState("0.00");
-  const [total, setTotal] = useState("21.90");
-
+  const [total, setTotal] = useState(0);
   const { id } = useParams();
 
-  const orders = [
-    {
-      image: dummy_food_img,
-      name: "Signature Laksa",
-      price: "8.50",
-      qty: 1,
-    },
-    {
-      image: dummy_food_img,
-      name: "Nasi Lemak",
-      price: "8.50",
-      qty: 1,
-    },
-  ];
+  const orders = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.auth.user);
 
-  const addOns = [
-    {
-      image: dummy_food_img,
-      name: "Sprite",
-      price: "8.50",
-    },
-    {
-      image: dummy_food_img,
-      name: "Sprite",
-      price: "8.50",
-    },
-    {
-      image: dummy_food_img,
-      name: "Sprite",
-      price: "8.50",
-    },
-    {
-      image: dummy_food_img,
-      name: "Sprite",
-      price: "8.50",
-    },
-    {
-      image: dummy_food_img,
-      name: "Sprite",
-      price: "8.50",
-    },
-  ];
+  useEffect(() => {
+    let subtotal = 0;
+    orders.map((order) => {
+      subtotal += order.price * order.qty;
+    });
+    setTotal(subtotal);
+  }, []);
 
   return (
     <div className="bg-light-grey">
@@ -76,19 +46,13 @@ const Status = () => {
         </div>
 
         <div className="order-card flex flex-col gap-0.5 p-5 mt-5 bg-white w-full text-black rounded-2xl">
-          <div className="flex flex-row justify-between">
-            <span className={styles.paragraph7}>Subtotal</span>
-            <span className={styles.paragraph8}>${subtotal}</span>
-          </div>
-          <div className="flex flex-row justify-between">
-            <span className={styles.paragraph7}>Tax & Fees</span>
-            <span className={styles.paragraph8}>${tax}</span>
-          </div>
-          <div className="pt-1.5 mb-1.5 border-b border-b-black opacity-20"></div>
-          <div className={`${styles.heading4} flex flex-row justify-between`}>
-            <span>Total</span>
-            <span>${total}</span>
-          </div>
+          {status === "received" ? (
+            <img src={preparing} alt="cart" />
+          ) : status === "serving" ? (
+            <img src={serving} alt="cart" />
+          ) : status === "completed" ? (
+            <img src={completed} alt="cart" />
+          ) : null}
         </div>
 
         <div className="mt-7">
@@ -106,22 +70,23 @@ const Status = () => {
 
             <div className="order-card flex flex-col gap-0.5 p-5 mt-4 bg-white w-full text-black rounded-2xl">
               <div className="flex flex-row justify-between">
-                <span className={styles.paragraph7}>Passenger Name</span>
-                <span className={styles.paragraph8}>Florentiana Yuwono</span>
+                <span className={styles.paragraph7}>Passenger Surname</span>
+                <span className={styles.paragraph8}>{user.surname}</span>
               </div>
               <div className="flex flex-row justify-between">
                 <span className={styles.paragraph7}>Seat Number</span>
-                <span className={styles.paragraph8}>21F</span>
+                <span className={styles.paragraph8}>{seat}</span>
               </div>
               <div className="flex flex-row justify-between">
                 <span className={styles.paragraph7}>Amount Payable</span>
-                <span className={styles.heading5}>${total}</span>
+                <span className={styles.heading5}>${total.toFixed(2)}</span>
               </div>
               <div className="pt-1.5 mb-1.5 border-b border-b-black opacity-20"></div>
               <div className="flex flex-row justify-between">
                 <span className={styles.paragraph7}>Order ID</span>
-                <span className={styles.heading5}>SCT012345678XYZ</span>
+                <span className={styles.heading5}>{id}</span>
               </div>
+              <img src={barcode} className="mx-auto mt-2" />
             </div>
           </div>
         </div>
@@ -134,7 +99,7 @@ const OrderCard = (props) => {
   const order = props.order;
   return (
     <div className="flex gap-6 py-3">
-      <img src={order.image} />
+      <img src={order.image} className="h-16 w-16" />
       <div className="flex flex-col gap-1 w-full my-auto">
         <span className={styles.heading5}>{order.name}</span>
         <div className="flex flex-row gap-3">
