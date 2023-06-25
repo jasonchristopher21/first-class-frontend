@@ -5,6 +5,10 @@ import cart_black from "../assets/cart-black.svg";
 import { useParams } from "react-router-dom";
 import { Sidebar } from "../components/Sidebar";
 
+import preparing from "../assets/status/preparing.png"
+import serving from "../assets/status/serving.png"
+import completed from "../assets/status/completed.png"
+
 const Status = () => {
   const [seat, setSeat] = useState("21F");
 
@@ -76,19 +80,13 @@ const Status = () => {
         </div>
 
         <div className="order-card flex flex-col gap-0.5 p-5 mt-5 bg-white w-full text-black rounded-2xl">
-          <div className="flex flex-row justify-between">
-            <span className={styles.paragraph7}>Subtotal</span>
-            <span className={styles.paragraph8}>${subtotal}</span>
-          </div>
-          <div className="flex flex-row justify-between">
-            <span className={styles.paragraph7}>Tax & Fees</span>
-            <span className={styles.paragraph8}>${tax}</span>
-          </div>
-          <div className="pt-1.5 mb-1.5 border-b border-b-black opacity-20"></div>
-          <div className={`${styles.heading4} flex flex-row justify-between`}>
-            <span>Total</span>
-            <span>${total}</span>
-          </div>
+          {status === "received" ? (
+            <img src={preparing} alt="cart" />
+          ) : status === "serving" ? (
+            <img src={serving} alt="cart" />
+          ) : status === "completed" ? (
+            <img src={completed} alt="cart" />
+          ) : null}
         </div>
 
         <div className="mt-7">
