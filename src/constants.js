@@ -1,0 +1,1 @@
+export const API_URL = "https://sa-firstclass-backend-production.up.railway.app/api"

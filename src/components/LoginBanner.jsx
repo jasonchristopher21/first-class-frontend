@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import styles from '../style';
 
+import { store } from '../redux/store';
+import { getUser } from '../redux/features/auth/authSlice';
+
 export const LoginBanner = () => {
   const [passengerMode, setPassengerMode] = useState(true);
   const [surname, setSurname] = useState('');
@@ -52,13 +55,12 @@ export const LoginBanner = () => {
     //   .then((response) => response.json())
     //   .then((data) => console.log(data));
   };
-  
-  const LoginButton = ({ onClick }) => {
+
+  const LoginButton = (props) => {
     return (
       <div className="w-[100%] text-center pb-4 pt-4">
         <button
-          className={`${styles.heading4} rounded-full bg-yellow w-[100%] focus:outline-0 focus:bg-yellow-accent text-black`}
-          onClick={onClick}>
+          className={`${styles.heading4} rounded-full bg-yellow w-[100%] focus:outline-0 focus:bg-yellow-accent text-black`} onClick={props.func}>
           Log in
         </button>
       </div>
@@ -88,6 +90,10 @@ export const LoginBanner = () => {
       </div>
     );
   };
+
+  const handlePassengerLogin = () => {
+    store.dispatch(getUser({ surname: "Yuwono", flightNumber: 'TR2542', seatNumber: '16K' }));
+  }
 
   return (
     <div className="h-[75%] bg-white rounded-t-3xl shadow-[0px 0px 20px 0px rgba(0, 0, 0, 0.25)] flex content-center items-center flex-col">
