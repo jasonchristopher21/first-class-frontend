@@ -36,7 +36,7 @@ export const Product = () => {
 
   const addProduct = () => {
     const order = {
-      id: product.id,
+      _id: product._id,
       name: product.name,
       price: product.price,
       qty: qty,

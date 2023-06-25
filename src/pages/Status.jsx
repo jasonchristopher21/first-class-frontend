@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "../style";
-import dummy_food_img from "../assets/dummy_food_img.png";
-import cart_black from "../assets/cart-black.svg";
+import barcode from "../assets/barcode.png";
+
 import { useParams } from "react-router-dom";
 import { Sidebar } from "../components/Sidebar";
 
@@ -15,9 +15,7 @@ const Status = () => {
   const [seat, setSeat] = useState("21F");
 
   const [status, setStatus] = useState("received");
-
   const [total, setTotal] = useState(0);
-
   const { id } = useParams();
 
   const orders = useSelector((state) => state.cart);
@@ -77,7 +75,7 @@ const Status = () => {
               </div>
               <div className="flex flex-row justify-between">
                 <span className={styles.paragraph7}>Seat Number</span>
-                <span className={styles.paragraph8}>21F</span>
+                <span className={styles.paragraph8}>{seat}</span>
               </div>
               <div className="flex flex-row justify-between">
                 <span className={styles.paragraph7}>Amount Payable</span>
@@ -88,6 +86,7 @@ const Status = () => {
                 <span className={styles.paragraph7}>Order ID</span>
                 <span className={styles.heading5}>{id}</span>
               </div>
+              <img src={barcode} className="mx-auto mt-2" />
             </div>
           </div>
         </div>

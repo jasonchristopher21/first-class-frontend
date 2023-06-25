@@ -8,6 +8,7 @@ const initialState = {
   token: null,
   error: null,
   success: false,
+  orderId: null,
 };
 
 export const getUser = createAsyncThunk("auth/getUser", 
@@ -43,6 +44,9 @@ const authSlice = createSlice({
         logout: (state, action) => {
             state.user = {};
             state.token = null;
+        },
+        addOrderId: (state, action) => {
+            state.orderId = action.payload;
         }
     },
     extraReducers(builder) {
@@ -66,7 +70,7 @@ const authSlice = createSlice({
     }
 });
 
-export const { setCredentials, logout } = authSlice.actions
+export const { setCredentials, logout, addOrderId } = authSlice.actions
 
 export default authSlice.reducer
 

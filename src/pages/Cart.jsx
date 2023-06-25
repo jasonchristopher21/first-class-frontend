@@ -8,52 +8,71 @@ import subtract from "../assets/subtract.svg";
 import { Sidebar } from "../components/Sidebar";
 
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import axios from "axios";
+import { API_URL } from "../constants";
+
 import {
   addToCart,
   incrementQuantity,
   decrementQuantity,
+  clearCart,
 } from "../redux/features/cart/cartSlice";
+
+import {
+  addOrderId,
+} from "../redux/features/auth/authSlice";
+
+import { selectToken } from "../redux/features/auth/authSlice";
 
 const Cart = () => {
   const [seat, setSeat] = useState("21F");
 
-  const [subtotal, setSubtotal] = useState(21.90);
+  const [subtotal, setSubtotal] = useState(21.9);
   const [tax, setTax] = useState(0);
-  const [total, setTotal] = useState(21.90);
+  const [total, setTotal] = useState(21.9);
 
   const orders = useSelector((state) => state.cart);
 
-  const addOns = [
-    {
-      image: dummy_food_img,
-      name: "Sprite",
-      price: "8.50",
-    },
-    {
-      image: dummy_food_img,
-      name: "Sprite",
-      price: "8.50",
-    },
-    {
-      image: dummy_food_img,
-      name: "Sprite",
-      price: "8.50",
-    },
-    {
-      image: dummy_food_img,
-      name: "Sprite",
-      price: "8.50",
-    },
-    {
-      image: dummy_food_img,
-      name: "Sprite",
-      price: "8.50",
-    },
-  ];
+  const addOns = [];
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [changed, setChanged] = useState(false);
+  const token = useSelector((state) => state.auth.token)
+
+  console.log(orders)
+
+  const postOrder = () => {
+    axios
+      .post(
+        `${API_URL}/order`,
+        {
+          products: orders.map((order) => {
+            console.log(order)
+            return {
+              productId: order._id,
+              quantity: order.qty,
+            };
+          }),
+          orderDateTime: new Date(),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        dispatch(addOrderId(res.data._id));
+        navigate("/status/" + res.data._id)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
     let subtotal = 0;
@@ -63,7 +82,7 @@ const Cart = () => {
     setSubtotal(subtotal);
     setTotal(subtotal + tax);
     setChanged(false);
-  }, [changed])
+  }, [changed]);
 
   return (
     <div className="bg-light-grey">
@@ -104,7 +123,12 @@ const Cart = () => {
               </span>
             )}
             {orders.map((order, idx) => (
-              <OrderCard order={order} key={idx} dispatch={dispatch} setChanged={setChanged} />
+              <OrderCard
+                order={order}
+                key={idx}
+                dispatch={dispatch}
+                setChanged={setChanged}
+              />
             ))}
           </div>
         </div>
@@ -127,7 +151,7 @@ const Cart = () => {
         <div>
           <button
             className="flex gap-3 py-2 px-8 bg-yellow mt-8 text-black rounded-full drop-shadow-[0px_4px_4px_rgba(0,0,0,0.05)]"
-            onClick={() => dispatch(addToCart(dummy))}
+            onClick={postOrder}
           >
             <img src={cart_black} className="-ml-1 my-auto" />
             <span className={`${styles.heading5} my-auto`}>Checkout</span>
@@ -151,13 +175,19 @@ const OrderCard = (props) => {
             <img
               src={subtract}
               className="hover:cursor-pointer"
-              onClick={() => {props.dispatch(decrementQuantity(order)); props.setChanged(true);}}
+              onClick={() => {
+                props.dispatch(decrementQuantity(order));
+                props.setChanged(true);
+              }}
             />
             <span className="px-2">{order.qty}</span>
             <img
               src={add}
               className="hover:cursor-pointer"
-              onClick={() => {props.dispatch(incrementQuantity(order)); props.setChanged(true);}}
+              onClick={() => {
+                props.dispatch(incrementQuantity(order));
+                props.setChanged(true);
+              }}
             />
           </div>
         </div>
