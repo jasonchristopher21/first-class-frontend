@@ -3,6 +3,7 @@ import styles from "../style";
 import dummy_food_img from "../assets/dummy_food_img.png";
 import cart_black from "../assets/cart-black.svg";
 import { useParams } from "react-router-dom";
+import { Sidebar } from "../components/Sidebar";
 
 const Status = () => {
   const [seat, setSeat] = useState("21F");
@@ -60,6 +61,9 @@ const Status = () => {
 
   return (
     <div className="bg-light-grey">
+      <div className="sidebar-pos">
+        <Sidebar />
+      </div>
       <div className="absolute z-0 top-0 left-0 w-full h-[10rem] bg-yellow rounded-bl-[40px] rounded-br-[40px] drop-shadow-[0_5px_30px_rgba(0,0,0,0.10)]" />
       <div className="absolute z-10 p-10 w-full">
         <div className="heading flex flex-col text-left text-black">

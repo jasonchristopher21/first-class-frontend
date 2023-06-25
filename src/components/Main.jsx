@@ -4,6 +4,7 @@ import { flight_path, big_deal } from "../assets";
 import dummy_food_img from "../assets/dummy_food_img.png";
 import { selectCurrentUser } from "../redux/features/auth/authSlice";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 export const Main = () => {
   const [flightNumber, setFlightNumber] = useState("TR252");
@@ -119,7 +120,9 @@ export const Main = () => {
           <span className={`${styles.heading3} text-black`}>Categories</span>
           <div className="grid grid-cols-2 gap-4 overflow-y-scroll no-scrollbar mt-4">
             {items.map((item, idx) => (
+              <Link to={`/product/${idx + 1}`} key={idx}>
               <ItemCard item={item} key={idx} />
+              </Link>
             ))}
           </div>
         </div>
