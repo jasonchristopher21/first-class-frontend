@@ -76,7 +76,7 @@ button:focus-visible {
 /* NAVIGATION BAR */
 
 .nav-content {
-  padding: 7px;
+  padding: 7px 5px 7px 5px;
 }
 
 /* YELLOW BANNER */
@@ -93,4 +93,12 @@ button:focus-visible {
 .no-scrollbar {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+}
+
+.sidebar-pos {
+  /* fixed 
+  z-50  */
+  position: fixed;
+  margin-top: 500px;
+  z-index: 50;
 }

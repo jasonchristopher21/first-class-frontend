@@ -4,11 +4,13 @@ import { Main } from "../components/Main";
 
 export default function Home() {
   return (
-    // <div id="home">
-    //   <Sidebar />
-    //   <div>
+    <div>
+      <div className="sidebar-pos">
+        <Sidebar />
+      </div>
+      <div>
         <Main />
-    //   </div>
-    // </div>
+      </div>
+    </div>
   );
 }
