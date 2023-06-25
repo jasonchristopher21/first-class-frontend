@@ -122,7 +122,7 @@ export const Main = () => {
 
         <div className="mt-7">
           <span className={`${styles.heading3} text-black`}>Popular Deals</span>
-          <div className="flex flex-nowrap gap-2 overflow-x-scroll hide-scroll-bar mt-4 -mx-10">
+          <div className="flex flex-nowrap gap-2 overflow-x-scroll no-scrollbar mt-4 -mx-10">
             <div className="ml-8" />
             {deals.map((deal, idx) => (
               <DealCard deal={deal} key={idx} />
@@ -130,20 +130,15 @@ export const Main = () => {
           </div>
         </div>
 
-        {/* <div className="mt-7">
-          <div className="flex flex-col">
-            <span className={`${styles.heading3} text-black`}>Add-Ons</span>
-            <span className={`${styles.paragraph6} text-black`}>
-              Grab them while they're available!
-            </span>
-          </div>
-          <div className="flex gap-2 overflow-x-scroll hide-scroll-bar mt-4 -mx-10">
+        <div className="mt-7">
+            <span className={`${styles.heading3} text-black`}>Categories</span>
+          <div className="flex gap-2 overflow-x-scroll no-scrollbar mt-4 -mx-10">
             <div className="ml-8"></div>
             {deals.map((deal, idx) => (
               <DealCard deal={deal} key={idx} />
             ))}
           </div>
-        </div> */}
+        </div>
 
         {/* <div>
           <button

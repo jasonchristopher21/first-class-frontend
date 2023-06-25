@@ -110,7 +110,7 @@ const Cart = () => {
               Grab them while they're available!
             </span>
           </div>
-          <div className="flex gap-2 overflow-x-scroll mt-4 -mx-10">
+          <div className="flex gap-2 overflow-x-scroll no-scrollbar mt-4 -mx-10">
             <div className="ml-8"></div>
             {addOns.map((item, idx) => (
               <AddOnCard item={item} key={idx} />
