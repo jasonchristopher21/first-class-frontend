@@ -55,6 +55,7 @@ const authSlice = createSlice({
                 "id": action.payload._id,
                 "surname": action.payload.surname,
                 "flightNumber": action.payload.flightNumber,
+                "seatNumber": action.payload.seatNumber,
             }
             state.token = action.payload.token;
             state.success = true;
