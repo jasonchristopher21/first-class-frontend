@@ -4,12 +4,11 @@ import { flight_path, big_deal } from "../assets";
 import { useSelector, useDispatch } from 'react-redux'
 import dummy_food_img from "../assets/dummy_food_img.png";
 import { selectCurrentUser } from "../redux/features/auth/authSlice";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export const Main = () => {
 
-  const surname = useSelector(selectCurrentUser).surname  
+  const surname = useSelector(selectCurrentUser)  
 
   const [flightNumber, setFlightNumber] = useState("TR252");
   const [passengerName, setPassengerName] = useState("Florentiana Yuwono");
@@ -77,7 +76,7 @@ export const Main = () => {
           <span className={styles.paragraph6}>
             Welcome onboard {flightNumber},
           </span>
-          <span className={styles.heading3}>{surname}</span>
+          <span className={styles.heading3}>{surname ? surname.surname : ""}</span>
         </div>
 
         <div className="order-card flex flex-col gap-0.5 p-5 mt-5 bg-white w-full text-black rounded-2xl">
