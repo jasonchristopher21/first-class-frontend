@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import { icon_cart, icon_home, icon_menubar, icon_order } from "../assets";
 import "../index.css";
+import { Link } from "react-router-dom";
 
 export const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,7 +17,9 @@ export const Sidebar = () => {
         <ul>
           <li>
             <div className="nav-content">
-              <img src={icon_home} />
+              <Link to="/home">
+                <img src={icon_home} />
+              </Link>
             </div>
           </li>
         </ul>
@@ -24,7 +27,9 @@ export const Sidebar = () => {
         <ul>
           <li>
             <div className="nav-content">
-              <img src={icon_cart} />
+              <Link to="/cart">
+                <img src={icon_cart} />
+              </Link>
             </div>
           </li>
         </ul>
@@ -32,7 +37,9 @@ export const Sidebar = () => {
         <ul>
           <li>
             <div className="nav-content">
-              <img src={icon_order} />
+              <Link to="/status/:id">
+                <img src={icon_order} />
+              </Link>
             </div>
           </li>
         </ul>

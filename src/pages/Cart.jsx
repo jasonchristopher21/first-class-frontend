@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import styles from "../style";
 import dummy_food_img from "../assets/dummy_food_img.png";
 import cart_black from "../assets/cart-black.svg";
+import { Sidebar } from "../components/Sidebar";
 
-import { useSelector, useDispatch } from 'react-redux'
-import { addToCart } from "../redux/features/cart/cartSlice"
+import { useSelector, useDispatch } from "react-redux";
+import { addToCart } from "../redux/features/cart/cartSlice";
 
 const Cart = () => {
   const [seat, setSeat] = useState("21F");
@@ -13,15 +14,14 @@ const Cart = () => {
   const [tax, setTax] = useState("0.00");
   const [total, setTotal] = useState("21.90");
 
-  const orders = useSelector(state => state.cart)
+  const orders = useSelector((state) => state.cart);
 
-  const dummy = 
-  {
+  const dummy = {
     image: dummy_food_img,
     name: "Signature Liksi",
     price: "8.50",
     qty: 1,
-  }
+  };
   // const orders = [
   //   {
   //     image: dummy_food_img,
@@ -69,6 +69,9 @@ const Cart = () => {
 
   return (
     <div className="bg-light-grey">
+      <div className="sidebar-pos">
+        <Sidebar />
+      </div>
       <div className="absolute z-0 top-0 left-0 w-full h-[10rem] bg-yellow rounded-bl-[40px] rounded-br-[40px] drop-shadow-[0_5px_30px_rgba(0,0,0,0.10)]" />
       <div className="absolute z-10 p-10 w-full">
         <div className="heading flex flex-col text-left text-black">
@@ -119,7 +122,10 @@ const Cart = () => {
         </div>
 
         <div>
-          <button className="flex gap-3 py-2 px-8 bg-yellow mt-8 text-black rounded-full drop-shadow-[0px_4px_4px_rgba(0,0,0,0.05)]" onClick={() => dispatch(addToCart(dummy))}>
+          <button
+            className="flex gap-3 py-2 px-8 bg-yellow mt-8 text-black rounded-full drop-shadow-[0px_4px_4px_rgba(0,0,0,0.05)]"
+            onClick={() => dispatch(addToCart(dummy))}
+          >
             <img src={cart_black} className="-ml-1 my-auto" />
             <span className={`${styles.heading5} my-auto`}>Checkout</span>
           </button>
