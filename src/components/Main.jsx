@@ -1,15 +1,23 @@
 import React, { useState } from "react";
 import styles from "../style";
-import dummy_food_img from "../assets/dummy_food_img.png";
-import cart_black from "../assets/cart-black.svg";
+import { flight_path } from "../assets";
+// import dummy_food_img from "../assets/dummy_food_img.png";
+// import cart_black from "../assets/cart-black.svg";
 
-import { useSelector, useDispatch } from "react-redux";
-import { addToCart } from "../redux/features/cart/cartSlice";
+// import { useSelector, useDispatch } from "react-redux";
+// import { addToCart } from "../redux/features/cart/cartSlice";
 
-const Main = () => {
+export const Main = () => {
   const [flightNumber, setFlightNumber] = useState("TR252");
   const [passengerName, setPassengerName] = useState("Florentiana Yuwono");
   const [seat, setSeat] = useState("21F");
+
+  const [fromCity, setFromCity] = useState("Singapore");
+  const [fromCityCode, setFromCityCode] = useState("SIN");
+  const [fromTime, setFromTime] = useState("10.55");
+  const [toCity, setToCity] = useState("Pekanbaru");
+  const [toCityCode, setToCityCode] = useState("PKU");
+  const [toTime, setToTime] = useState("11.00");
 
   // const [subtotal, setSubtotal] = useState("21.90");
   // const [tax, setTax] = useState("0.00");
@@ -17,12 +25,12 @@ const Main = () => {
 
   // const orders = useSelector(state => state.cart)
 
-  const dummy = {
-    image: dummy_food_img,
-    name: "Signature Liksi",
-    price: "8.50",
-    qty: 1,
-  };
+  // const dummy = {
+  //   image: dummy_food_img,
+  //   name: "Signature Liksi",
+  //   price: "8.50",
+  //   qty: 1,
+  // };
   // const orders = [
   //   {
   //     image: dummy_food_img,
@@ -38,33 +46,33 @@ const Main = () => {
   //   },
   // ];
 
-  const addOns = [
-    {
-      image: dummy_food_img,
-      name: "Sprite",
-      price: "8.50",
-    },
-    {
-      image: dummy_food_img,
-      name: "Sprite",
-      price: "8.50",
-    },
-    {
-      image: dummy_food_img,
-      name: "Sprite",
-      price: "8.50",
-    },
-    {
-      image: dummy_food_img,
-      name: "Sprite",
-      price: "8.50",
-    },
-    {
-      image: dummy_food_img,
-      name: "Sprite",
-      price: "8.50",
-    },
-  ];
+  // const addOns = [
+  //   {
+  //     image: dummy_food_img,
+  //     name: "Sprite",
+  //     price: "8.50",
+  //   },
+  //   {
+  //     image: dummy_food_img,
+  //     name: "Sprite",
+  //     price: "8.50",
+  //   },
+  //   {
+  //     image: dummy_food_img,
+  //     name: "Sprite",
+  //     price: "8.50",
+  //   },
+  //   {
+  //     image: dummy_food_img,
+  //     name: "Sprite",
+  //     price: "8.50",
+  //   },
+  //   {
+  //     image: dummy_food_img,
+  //     name: "Sprite",
+  //     price: "8.50",
+  //   },
+  // ];
 
   // const dispatch = useDispatch();
 
@@ -81,30 +89,39 @@ const Main = () => {
 
         <div className="order-card flex flex-col gap-0.5 p-5 mt-5 bg-white w-full text-black rounded-2xl">
           <div className="flex flex-row justify-between">
-            <span className={styles.paragraph7}>Flight No.</span>
-            <span className={styles.paragraph8}>${flightNumber}</span>
+            <span className={styles.heading3}>{fromCityCode}</span>
+            <img src={flight_path} />
+            <span className={styles.heading3}>{toCityCode}</span>
           </div>
           <div className="flex flex-row justify-between">
-            <span className={styles.paragraph7}>Seat No.</span>
-            <span className={styles.paragraph8}>${seat}</span>
+            <span className={styles.paragraph7}>{fromCity}</span>
+            <span className={styles.paragraph7}>{toCity}</span>
+          </div>
+          <div className="flex flex-row justify-between">
+            <span className={styles.paragraph8}>{toTime}</span>
+            <span className={styles.paragraph8}>{toTime}</span>
           </div>
           <div className="pt-1.5 mb-1.5 border-b border-b-black opacity-20"></div>
           <div className="flex flex-row justify-between">
             <div className="flex flex-row justify-evenly">
-              <span className={styles.paragraph8}>Flight No.</span>
-              <span className={styles.heading5}>{flightNumber}</span>
+              <span className={styles.paragraph8}>
+                Flight No.
+                <span className={styles.heading5}> {flightNumber} </span>
+              </span>
             </div>
             <div className="flex flex-row justify-between"></div>
-              <span className={styles.paragraph8}>Seat No.</span>
-              <span className={styles.heading5}>{seat}</span>
-            </div>
+            <span className={styles.paragraph8}>
+              Seat No.
+              <span className={styles.heading5}> {seat} </span>
+            </span>
           </div>
         </div>
+      </div>
 
-        <div className="mt-7">
-          <span className={`${styles.heading3} text-black`}>Popular Deals</span>
-        </div>
-        {/* 
+      <div className="mt-7">
+        <span className={`${styles.heading3} text-black`}>Popular Deals</span>
+      </div>
+      {/* 
         <div className="mt-7">
           <div className="flex flex-col">
             <span className={`${styles.heading3} text-black`}>Add-Ons</span>
@@ -129,37 +146,35 @@ const Main = () => {
             <span className={`${styles.heading5} my-auto`}>Checkout</span>
           </button>
         </div> */}
-      </div>
-  );
-};
-
-const OrderCard = (props) => {
-  const order = props.order;
-  return (
-    <div className="flex gap-5 py-4">
-      <img src={order.image} />
-      <div className="flex flex-col gap-1.5 w-full my-auto">
-        <span className={styles.heading5}>{order.name}</span>
-        <div className="flex flex-row justify-between">
-          <span className={styles.paragraph2}>${order.price}</span>
-          <span>{order.qty}</span>
-        </div>
-      </div>
     </div>
   );
 };
 
-const AddOnCard = (props) => {
-  const item = props.item;
-  return (
-    <div className="flex flex-col gap-2 bg-white px-4 pt-4 pb-2 rounded-lg">
-      <img src={item.image} className="my-auto" />
-      <div className="flex flex-row justify-between gap-4 text-black">
-        <span className={`${styles.heading5} my-auto`}>{item.name}</span>
-        <span className={`${styles.paragraph8} my-auto`}>${item.price}</span>
-      </div>
-    </div>
-  );
-};
+// const OrderCard = (props) => {
+//   const order = props.order;
+//   return (
+//     <div className="flex gap-5 py-4">
+//       <img src={order.image} />
+//       <div className="flex flex-col gap-1.5 w-full my-auto">
+//         <span className={styles.heading5}>{order.name}</span>
+//         <div className="flex flex-row justify-between">
+//           <span className={styles.paragraph2}>${order.price}</span>
+//           <span>{order.qty}</span>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
-export default Main;
+// const AddOnCard = (props) => {
+//   const item = props.item;
+//   return (
+//     <div className="flex flex-col gap-2 bg-white px-4 pt-4 pb-2 rounded-lg">
+//       <img src={item.image} className="my-auto" />
+//       <div className="flex flex-row justify-between gap-4 text-black">
+//         <span className={`${styles.heading5} my-auto`}>{item.name}</span>
+//         <span className={`${styles.paragraph8} my-auto`}>${item.price}</span>
+//       </div>
+//     </div>
+//   );
+// };
