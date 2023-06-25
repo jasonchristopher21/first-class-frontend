@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import styles from "../style";
 import dummy_food_img from "../assets/dummy_food_img.png";
 import { spicy, vegetarian } from "../assets";
+import { Sidebar } from "../components/Sidebar";
 
 export const Product = () => {
   const { id } = useParams();
@@ -63,6 +64,9 @@ export const Product = () => {
 
   return (
     <div className="bg-white h-screen">
+      <div className="sidebar-pos">
+        <Sidebar />
+      </div>
       <img src={product.image} className="w-screen py-[50px] px-[50px]" />
       <div className="bg-white rounded-tl-[40px] rounded-tr-[40px] shadow-inner">
         <div className="px-[40px] py-[40px] flex flex-col justify-between">
