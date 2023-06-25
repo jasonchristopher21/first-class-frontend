@@ -130,7 +130,7 @@ export const LoginBanner = () => {
     }
 
     store.dispatch(getStaff({ staffId: staffId, flightNumber: flightNumber }));
-    navigate('home');
+    navigate('staff/home');
   };
 
   useEffect(() => {

@@ -9,7 +9,6 @@ import axios from "axios";
 import { API_URL } from "../constants";
 
 export const Main = () => {
-  const surname = useSelector(selectCurrentUser);
 
   const [flightNumber, setFlightNumber] = useState("TR252");
   const [passengerName, setPassengerName] = useState("Florentiana Yuwono");
@@ -59,9 +58,28 @@ export const Main = () => {
     },
   ];
 
-  useEffect(() => {
-    console.log(user);
-  }, []);
+  const items = [
+    {
+      image: dummy_food_img,
+      name: "Signature Laksa",
+      price: "8.50",
+    },
+    {
+      image: dummy_food_img,
+      name: "Nasi Lemak",
+      price: "8.50",
+    },
+    {
+      image: dummy_food_img,
+      name: "Nasi Padang",
+      price: "8.50",
+    },
+    {
+      image: dummy_food_img,
+      name: "Lontong Sayur",
+      price: "8.50",
+    },
+  ];
 
   return (
     <div className="bg-light-grey">
@@ -69,11 +87,9 @@ export const Main = () => {
       <div className="absolute z-10 p-10 w-full">
         <div className="heading flex flex-col text-left text-black">
           <span className={styles.paragraph6}>
-            Welcome onboard {flightNumber},
+            Welcome onboard {user? user.flightNumber : ""},
           </span>
-          <span className={styles.heading3}>
-            {surname ? surname.surname : ""}
-          </span>
+          <span className={styles.heading3}>{user.surname ? user.surname : ""}</span>
         </div>
 
         <div className="order-card flex flex-col gap-0.5 p-5 mt-5 bg-white w-full text-black rounded-2xl">
@@ -95,13 +111,13 @@ export const Main = () => {
             <div className="flex flex-row justify-evenly">
               <span className={styles.paragraph8}>
                 Flight No.
-                <span className={styles.heading5}> {flightNumber} </span>
+                <span className={styles.heading5}> {user? user.flightNumber : ""} </span>
               </span>
             </div>
             <div className="flex flex-row justify-between"></div>
             <span className={styles.paragraph8}>
               Seat No.
-              <span className={styles.heading5}> {seat} </span>
+              <span className={styles.heading5}> {user? user.seatNumber? user.seatNumber : "21A" : ""} </span>
             </span>
           </div>
         </div>

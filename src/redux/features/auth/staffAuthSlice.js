@@ -22,7 +22,7 @@ export const getStaff = createAsyncThunk("auth/getStaff",
                     "Content-Type": "application/json",
                 }
             }
-            const response = await axios.post(`${API_URL}/auth/staff`, payload, defaultHeaders);
+            const response = await axios.post(`${API_URL}/auth/staff/login`, payload, defaultHeaders);
             console.log(response.data)
             return response.data;
         } catch (error) {
@@ -51,8 +51,12 @@ const staffAuthSlice = createSlice({
         });
         builder.addCase(getStaff.fulfilled, (state, action) => {
             state.loading = false;
-            state.user = action.payload.user;
-            state.token = action.payload.accessToken;
+            state.user = {
+                "id": action.payload._id,
+                "staffId": action.payload.staffId,
+                "flightId": action.payload.flightId,
+            }
+            state.token = action.payload.token;
             state.success = true;
         });
         builder.addCase(getStaff.rejected, (state, action) => {
