@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 export const Main = () => {
 
-  const surname = useSelector(selectCurrentUser)  
+  const user = useSelector(selectCurrentUser)  
 
   const [flightNumber, setFlightNumber] = useState("TR252");
   const [passengerName, setPassengerName] = useState("Florentiana Yuwono");
@@ -20,8 +20,6 @@ export const Main = () => {
   const [toCity, setToCity] = useState("Pekanbaru");
   const [toCityCode, setToCityCode] = useState("PKU");
   const [toTime, setToTime] = useState("11.00");
-  
-  const user = useSelector(selectCurrentUser);
 
   const deals = [
     {
@@ -64,19 +62,15 @@ export const Main = () => {
     },
   ];
 
-  useEffect(() => {
-    console.log(user);
-  }, [])
-
   return (
     <div className="bg-light-grey">
       <div className="absolute z-0 top-0 left-0 w-full h-[10rem] bg-yellow rounded-bl-[40px] rounded-br-[40px] drop-shadow-[0_5px_30px_rgba(0,0,0,0.10)]" />
       <div className="absolute z-10 p-10 w-full">
         <div className="heading flex flex-col text-left text-black">
           <span className={styles.paragraph6}>
-            Welcome onboard {flightNumber},
+            Welcome onboard {user? user.flightNumber : ""},
           </span>
-          <span className={styles.heading3}>{surname ? surname.surname : ""}</span>
+          <span className={styles.heading3}>{user.surname ? user.surname : ""}</span>
         </div>
 
         <div className="order-card flex flex-col gap-0.5 p-5 mt-5 bg-white w-full text-black rounded-2xl">
@@ -98,13 +92,13 @@ export const Main = () => {
             <div className="flex flex-row justify-evenly">
               <span className={styles.paragraph8}>
                 Flight No.
-                <span className={styles.heading5}> {flightNumber} </span>
+                <span className={styles.heading5}> {user? user.flightNumber : ""} </span>
               </span>
             </div>
             <div className="flex flex-row justify-between"></div>
             <span className={styles.paragraph8}>
               Seat No.
-              <span className={styles.heading5}> {seat} </span>
+              <span className={styles.heading5}> {user? user.seatNumber? user.seatNumber : "21A" : ""} </span>
             </span>
           </div>
         </div>

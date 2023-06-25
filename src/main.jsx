@@ -13,6 +13,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { persistor, store } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
+import { StaffHome } from "./pages/StaffHome.jsx";
+import { StaffStatus } from "./pages/StaffStatus.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -22,6 +24,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Routes>
             <Route path="/" element={<App />} />
             <Route path="home" element={<Home />} />
+            <Route path="staff/home" element={<StaffHome />} />
+            <Route path="staff/order/:id" element={<StaffStatus />} />
             <Route path="cart" element={<Cart />} />
             <Route path="status/:id" element={<Status />} />
             <Route path="product/:id" element={<Product />} />
