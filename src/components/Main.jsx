@@ -58,29 +58,6 @@ export const Main = () => {
     },
   ];
 
-  const items = [
-    {
-      image: dummy_food_img,
-      name: "Signature Laksa",
-      price: "8.50",
-    },
-    {
-      image: dummy_food_img,
-      name: "Nasi Lemak",
-      price: "8.50",
-    },
-    {
-      image: dummy_food_img,
-      name: "Nasi Padang",
-      price: "8.50",
-    },
-    {
-      image: dummy_food_img,
-      name: "Lontong Sayur",
-      price: "8.50",
-    },
-  ];
-
   return (
     <div className="bg-light-grey">
       <div className="absolute z-0 top-0 left-0 w-full h-[10rem] bg-yellow rounded-bl-[40px] rounded-br-[40px] drop-shadow-[0_5px_30px_rgba(0,0,0,0.10)]" />
