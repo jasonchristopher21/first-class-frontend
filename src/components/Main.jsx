@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import styles from "../style";
 import { flight_path, big_deal } from "../assets";
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from "react-redux";
 import dummy_food_img from "../assets/dummy_food_img.png";
 import { selectCurrentUser } from "../redux/features/auth/authSlice";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { API_URL } from "../constants";
 
 export const Main = () => {
-
-  const surname = useSelector(selectCurrentUser)  
+  const surname = useSelector(selectCurrentUser);
 
   const [flightNumber, setFlightNumber] = useState("TR252");
   const [passengerName, setPassengerName] = useState("Florentiana Yuwono");
@@ -20,8 +21,25 @@ export const Main = () => {
   const [toCity, setToCity] = useState("Pekanbaru");
   const [toCityCode, setToCityCode] = useState("PKU");
   const [toTime, setToTime] = useState("11.00");
-  
+
   const user = useSelector(selectCurrentUser);
+
+  const [items, setItems] = useState([]);
+
+  const getItems = async () => {
+    axios
+      .get(`${API_URL}/product`)
+      .then((res) => {
+        setItems(res.data.filter((item) => item.availability > 0));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getItems();
+  }, []);
 
   const deals = [
     {
@@ -41,32 +59,9 @@ export const Main = () => {
     },
   ];
 
-  const items = [
-    {
-      image: dummy_food_img,
-      name: "Signature Laksa",
-      price: "8.50",
-    },
-    {
-      image: dummy_food_img,
-      name: "Nasi Lemak",
-      price: "8.50",
-    },
-    {
-      image: dummy_food_img,
-      name: "Nasi Padang",
-      price: "8.50",
-    },
-    {
-      image: dummy_food_img,
-      name: "Lontong Sayur",
-      price: "8.50",
-    },
-  ];
-
   useEffect(() => {
     console.log(user);
-  }, [])
+  }, []);
 
   return (
     <div className="bg-light-grey">
@@ -76,7 +71,9 @@ export const Main = () => {
           <span className={styles.paragraph6}>
             Welcome onboard {flightNumber},
           </span>
-          <span className={styles.heading3}>{surname ? surname.surname : ""}</span>
+          <span className={styles.heading3}>
+            {surname ? surname.surname : ""}
+          </span>
         </div>
 
         <div className="order-card flex flex-col gap-0.5 p-5 mt-5 bg-white w-full text-black rounded-2xl">
@@ -123,8 +120,8 @@ export const Main = () => {
           <span className={`${styles.heading3} text-black`}>Categories</span>
           <div className="grid grid-cols-2 gap-4 overflow-y-scroll no-scrollbar mt-4">
             {items.map((item, idx) => (
-              <Link to={`/product/${idx + 1}`} key={idx}>
-              <ItemCard item={item} key={idx} />
+              <Link to={`/product/${item._id}`} key={idx}>
+                <ItemCard item={item} key={idx} />
               </Link>
             ))}
           </div>
@@ -153,7 +150,7 @@ const ItemCard = (props) => {
   const item = props.item;
   return (
     <div className="flex flex-col gap-2 bg-white px-3 py-3 rounded-lg">
-      <img src={item.image} className="my-auto" />
+      <img src={item.imageUrl} className="my-auto" />
       <div className="flex flex-col justify-between text-black">
         <span className={`${styles.heading5} my-auto`}>{item.name}</span>
         <span className={`${styles.paragraph8} my-auto`}>${item.price}</span>
