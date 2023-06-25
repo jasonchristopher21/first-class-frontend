@@ -95,6 +95,14 @@ export const Product = () => {
           </div>
         </div>
       </div>
+      <div className="absolute z-0 bottom-0 left-0 w-full h-[5rem] bg-yellow rounded-tl-[40px] rounded-tr-[40px] drop-shadow-[0_5px_30px_rgba(0,0,0,0.10)]">
+        <div className="absolute z-10 p-8 w-full">
+          <div className="heading flex flex-row text-left justify-between text-black">
+            <span className={styles.heading4}>${product.price}</span>
+            <span className={styles.heading3}>Hello</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
