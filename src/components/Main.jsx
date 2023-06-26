@@ -63,10 +63,12 @@ export const Main = () => {
       <div className="absolute z-0 top-0 left-0 w-full h-[10rem] bg-yellow rounded-bl-[40px] rounded-br-[40px] drop-shadow-[0_5px_30px_rgba(0,0,0,0.10)]" />
       <div className="absolute z-10 p-10 w-full">
         <div className="heading flex flex-col text-left text-black">
-          <span className={styles.paragraph6}>
+          {/* <span className={styles.paragraph6}>
             Welcome onboard {user? user.flightNumber : ""},
-          </span>
-          <span className={styles.heading3}>{user.surname ? user.surname : ""}</span>
+          </span> */}
+          {/* <span className={styles.heading3}>{user.surname ? user.surname : ""}</span> */}
+          <span className={styles.paragraph6}>Welcome onboard TR252</span>
+          <span className={styles.heading3}>Florentiana Yuwono</span>
         </div>
 
         <div className="order-card flex flex-col gap-0.5 p-5 mt-5 bg-white w-full text-black rounded-2xl">
@@ -94,7 +96,7 @@ export const Main = () => {
             <div className="flex flex-row justify-between"></div>
             <span className={styles.paragraph8}>
               Seat No.
-              <span className={styles.heading5}> {user? user.seatNumber? user.seatNumber : "21A" : ""} </span>
+              <span className={styles.heading5}> {user? user.seatNumber? user.seatNumber : seat : seat} </span>
             </span>
           </div>
         </div>
